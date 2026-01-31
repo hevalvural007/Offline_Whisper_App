@@ -39,7 +39,7 @@ Java_com_hevalvural_whisper_1task_WhisperLib_freeContext(JNIEnv *env, jobject th
 JNIEXPORT jstring JNICALL
 Java_com_hevalvural_whisper_1task_WhisperLib_fullTranscribe(JNIEnv *env, jobject thiz, jlong context_ptr, jfloatArray audio_data) {
 
-    if (ctx == nullptr) return env->NewStringUTF("Model Yüklü Değil!");
+    if (ctx == nullptr) return env->NewStringUTF("Model is missing!");
 
     jfloat *audio_raw = env->GetFloatArrayElements(audio_data, nullptr);
     jsize len = env->GetArrayLength(audio_data);
@@ -54,7 +54,7 @@ Java_com_hevalvural_whisper_1task_WhisperLib_fullTranscribe(JNIEnv *env, jobject
     wparams.n_threads = 4;
 
     if (whisper_full(ctx, wparams, pcmf32.data(), pcmf32.size()) != 0) {
-        return env->NewStringUTF("Hata: Çeviri yapılamadı (whisper_full failed).");
+        return env->NewStringUTF("Error while converting (whisper_full failed).");
     }
 
     std::string result = "";
